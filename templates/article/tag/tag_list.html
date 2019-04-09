@@ -74,7 +74,7 @@
                     $.ajax({
                         url: "{% url 'article:del_article_tag' %}",
                         type: "POST",
-                        data: {"tab_id": tag_id},
+                        data: {"tag_id": tag_id},
                         success: function (e) {
                             if (e == "1") {
                                 parent.location.reload();
