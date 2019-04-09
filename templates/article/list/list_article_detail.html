@@ -17,11 +17,13 @@
                 {{ total_likes }} like{{ total_likes|pluralize }}
                 </span>
                         <span style="margin-left:20px;">{{ views }} view{{ views|pluralize }} </span>
+                        <p><span style="margin-right:10px"><strong>Tags:</strong></span>
+                            {{ article.article_tag.all|join:"," }}</p>
                     </header>
 
                     <link rel="stylesheet" href="{% static 'editor/css/editormd.preview.css' %}">
                     <div id="editormd-view">{{ article.body|markdown }}
-{#                        <textarea id="append-test" style="display:none;">{{ article.body }}</textarea>#}
+                        {#<textarea id="append-test" style="display:none;">{{ article.body }}</textarea>#}
                     </div>
                 </div>
                 <p class="text-center">
@@ -94,6 +96,15 @@
                     {% endfor %}
 
                 </ul>
+                <hr>
+                <p class="text-center">
+                <h3>推荐相似文章</h3></p>
+                {% for similar in similar_articles %}
+                    <p><a href="{{ similar.get_url_path }}">{{ similar.title }}</a></p>
+                {% empty %}
+                    <p>没有相似文章</p>
+                {% endfor %}
+
             </div>
         </div>
         <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>

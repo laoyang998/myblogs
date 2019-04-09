@@ -6,6 +6,8 @@ from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import ArticleColumn, ArticlePost, ArticleTag
 from .forms import ArticleColumnForm, ArticlePostForm, ArticleTagForm
+from django.db.models import Count
+import  json
 
 
 @login_required(login_url='/account')
@@ -75,6 +77,11 @@ def article_post(request):
                 new_article.author = request.user
                 new_article.column = request.user.article_column.get(id=request.POST['column_id'])
                 new_article.save()
+                tags=request.POST['tags']
+                if tags:
+                    for atag in json.loads(tags):
+                        tag=request.user.tag.get(tag=atag)
+                        new_article.article_tag.add(tag)
                 return HttpResponse('1')
             except Exception as e:
                 print(e)
@@ -84,9 +91,11 @@ def article_post(request):
     else:
         article_post_form = ArticlePostForm()
         aritcle_columns = request.user.article_column.all()
+        article_tags=request.user.tag.all()
         return render(request, 'article/column/article_post.html',
                       {'article_post_form': article_post_form,
-                       'aritcle_columns': aritcle_columns})
+                       'aritcle_columns': aritcle_columns,
+                       'article_tags':article_tags})
 
 
 @login_required(login_url='/account')
