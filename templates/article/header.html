@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <img width="36" src="{% static 'images/logo.png' %}"/>
+        </div>
+        <div>
+            <ul class="nav navbar-nav" role="tablist">
+                <li><a href="{% url 'blog_title' %}">首页</a></li>
+                <li><a href="{% url 'article:article_column' %}">文章管理</a></li>
+                <li><a href="{% url 'article:article_column' %}">后台管理</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li>
+                        <div class="dropdown" style="margin-top:8px">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu"
+                                    data-toggle="dropdown">{{ user.username }}<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'password_reset_recover' %}">修改密码</a></li>
+                                <li><a href="{% url 'account:my-information' %}">个人信息</a></li>
+                                <li><a href="{% url 'article:article_column' %}">后台管理</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="{% url 'account:logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'account:login' %}">LOGIN</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>

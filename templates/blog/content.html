@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+{% block title %}blog article{% endblock %}
+{% block content %}
+    <div class="row text-center vertical-middle-sm">
+        <h1>{{ article.title }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <p class="text-center">
+                <span>{{ article.author.username }}</span>
+                <span style="margin-left:20px">{{ publish }}</span>
+            </p>
+            <div>{{ article.body }}</div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <img width="200"
+                 src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1554173367&di=21dc92748c918e681dc9fb83579340bb&src=http://img06.tooopen.com/images/20170513/tooopen_sy_209368462926.jpg"/>
+        </div>
+    </div>
+{% endblock %}

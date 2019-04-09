@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Welcome You!!</h1>
+    <h3>Life is short,you need Python</h3>
+    <h2>Django make it easier to build better Web app more quikly and less code</h2>
+    {% load staticfiles %}
+    <img src="{% static 'images/home.jpeg' %}" >
+{% endblock %}
