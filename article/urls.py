@@ -16,4 +16,5 @@ urlpatterns = [
     path('author_articles/<username>', list_views.article_titles, name='author_articles'),
     path('like_article', list_views.user_like, name='like_article'),
     path('article_tag', views.Article_tag, name='article_tag'),
+    path('del_article_tag', views.del_article, name='del_article_tag'),
 ]

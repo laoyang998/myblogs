@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from .models import ArticleColumn, ArticlePost,ArticleTag
-from .forms import ArticleColumnForm, ArticlePostForm,ArticleTagForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import ArticleColumn, ArticlePost, ArticleTag
+from .forms import ArticleColumnForm, ArticlePostForm, ArticleTagForm
 
 
 @login_required(login_url='/account')
@@ -92,19 +92,19 @@ def article_post(request):
 @login_required(login_url='/account')
 def article_list(request):
     articles_list = ArticlePost.objects.filter(author=request.user)
-    pageinator=Paginator(articles_list,2)  #创建分页对象，每页最多2条记录
-    page=request.GET.get('page')  #获取浏览器请求参数page的值
+    pageinator = Paginator(articles_list, 2)  # 创建分页对象，每页最多2条记录
+    page = request.GET.get('page')  # 获取浏览器请求参数page的值
     try:
-        current_page=pageinator.page(page)
-        articles=current_page.object_list
+        current_page = pageinator.page(page)
+        articles = current_page.object_list
     except PageNotAnInteger:
-        current_page=pageinator.page(1)
-        articles=current_page.object_list
+        current_page = pageinator.page(1)
+        articles = current_page.object_list
     except EmptyPage:
-        current_page=pageinator.page(pageinator.num_pages)
-        articles=current_page.object_list
+        current_page = pageinator.page(pageinator.num_pages)
+        articles = current_page.object_list
     return render(request, 'article/column/article_list.html', {'articles': articles,
-                                                                'page':current_page})
+                                                                'page': current_page})
 
 
 @login_required(login_url='/account')
@@ -138,7 +138,7 @@ def redit_article(request, article_id):
                                                                     'article_columns': article_columns,
                                                                     'this_article_column': this_article_column,
                                                                     'this_article_form': this_article_form})
-    else:   #POST
+    else:  # POST
         redit_article = ArticlePost.objects.get(id=article_id)
         try:
             redit_article.column = request.user.article_column.get(id=request.POST['column_id'])
@@ -153,20 +153,33 @@ def redit_article(request, article_id):
 @login_required(login_url='/account')
 @csrf_exempt
 def Article_tag(request):
-    if request.method=='GET':
-        article_tags=ArticleTag.objects.filter(author=request.user)
-        article_tag_form=ArticleTagForm()
-        return render(request,'article/tag/tag_list.html',{'article_tags':article_tags,
-                                                           'article_tag_form':article_tag_form})
-    if request.method=='POST':
-        tag_post_form=ArticleTagForm(data=request.POST)
+    if request.method == 'GET':
+        article_tags = ArticleTag.objects.filter(author=request.user)
+        article_tag_form = ArticleTagForm()
+        return render(request, 'article/tag/tag_list.html', {'article_tags': article_tags,
+                                                             'article_tag_form': article_tag_form})
+    if request.method == 'POST':
+        tag_post_form = ArticleTagForm(data=request.POST)
         if tag_post_form.is_valid():
             try:
-                new_tag=tag_post_form.save(commit=False)
-                new_tag.author=request.user
+                new_tag = tag_post_form.save(commit=False)
+                new_tag.author = request.user
                 new_tag.save()
                 return HttpResponse('1')
             except:
                 return HttpResponse('The data can not be save')
         else:
             return HttpResponse('Sorry,the form is not valid')
+
+
+@login_required(login_url='/account')
+@csrf_exempt
+@require_POST
+def del_tag(request):
+    tag_id = request.POST['tag_id']
+    try:
+        tag = ArticleTag.objects.get(id=tag_id)
+        tag.delete()
+        return HttpResponse('1')
+    except:
+        return HttpResponse('2')
