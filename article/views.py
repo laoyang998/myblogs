@@ -6,7 +6,6 @@ from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import ArticleColumn, ArticlePost, ArticleTag
 from .forms import ArticleColumnForm, ArticlePostForm, ArticleTagForm
-from django.db.models import Count
 import  json
 
 
