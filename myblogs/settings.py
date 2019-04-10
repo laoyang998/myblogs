@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'password_reset',
     'article',
     'image',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,9 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_REDIRECT_URL='home/'
+
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
 
 # SMTP服务器
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
