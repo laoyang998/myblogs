@@ -10,6 +10,8 @@
             <li><a href="{% url 'home' %}">HOME</a></li>
             <li><a href="{% url 'blog_title' %}">BLOG</a></li>
             <li><a href="{% url 'article:list_article_titles' %}">文章</a></li>
+            <li><a href="{% url 'course:course_list' %}">课程</a></li>
+            <li><a href="{% url 'course:about' %}">关于本站</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
