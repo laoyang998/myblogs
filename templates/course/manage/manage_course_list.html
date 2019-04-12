@@ -26,6 +26,9 @@
                         <a class="delete" name="delete" href="{% url 'course:delete_course' course.id %}">
                             <span class="glyphicon glyphicon-trash" style="margin-left: 20px;"></span>
                         </a>
+                        <a name="search" href="{% url 'course:list_lesson' course.id %}">
+                            <span class="glyphicon glyphicon-search" style="margin-left: 20px;"></span>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

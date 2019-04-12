@@ -8,6 +8,7 @@ class Course(models.Model):
     user = models.ForeignKey(User, related_name='course_user', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=300, unique=True)
+    student = models.ManyToManyField(User, related_name='courses_joined', blank=True)
     overview = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
 
